@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RxJavaSample</string>
+    <string name="err_io_exception">数据读写异常</string>
+    <string name="err_network_unavailable">网络出错啦 请重新加载</string>
+    <string name="err_parse_error">数据解析异常</string>
+    <string name="no_more_data">没有更多内容</string>
+    <string name="no_data">暂无内容</string>
+    <string name="network_error_retry">网络出错，请点击重试</string>
+</resources>
