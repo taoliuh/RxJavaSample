@@ -1,9 +1,13 @@
 package com.sonaive.rxjava.sample.api;
 
-import com.sonaive.rxjava.sample.data.Projects;
+import com.sonaive.rxjava.sample.data.ProjectList;
 
+import java.util.Map;
+
+import retrofit2.http.FieldMap;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -11,5 +15,5 @@ import rx.Observable;
  */
 public interface ProjectsService {
     @GET("/projects")
-    Observable<Projects> getProjects(@Query("offset") int offset, @Query("limit") int limit);
+    Observable<ProjectList> getProjects(@QueryMap Map<String, String> map);
 }

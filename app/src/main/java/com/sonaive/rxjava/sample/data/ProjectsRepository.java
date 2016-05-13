@@ -2,8 +2,6 @@ package com.sonaive.rxjava.sample.data;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import rx.Observable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -29,8 +27,8 @@ public class ProjectsRepository implements ProjectsDataSource {
     }
 
     @Override
-    public Observable<Projects> getProjects(int page) {
-        Observable<Projects> remoteProjects = mProjectsRemoteDataSource.getProjects(page);
+    public Observable<ProjectList> getProjects(int page) {
+        Observable<ProjectList> remoteProjects = mProjectsRemoteDataSource.getProjects(page);
         return remoteProjects;
     }
 }

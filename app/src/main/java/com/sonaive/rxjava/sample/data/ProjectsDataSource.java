@@ -7,6 +7,6 @@ import rx.Observable;
  */
 public interface ProjectsDataSource {
 
-    Observable<Projects> getProjects(int page);
+    Observable<ProjectList> getProjects(int page);
 
 }

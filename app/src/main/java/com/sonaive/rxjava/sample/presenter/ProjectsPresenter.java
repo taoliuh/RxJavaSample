@@ -2,7 +2,7 @@ package com.sonaive.rxjava.sample.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.sonaive.rxjava.sample.data.Projects;
+import com.sonaive.rxjava.sample.data.ProjectList;
 import com.sonaive.rxjava.sample.data.ProjectsRepository;
 
 import rx.Observer;
@@ -36,7 +36,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
                 .getProjects(mPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Projects>() {
+                .subscribe(new Observer<ProjectList>() {
                     @Override
                     public void onCompleted() {
                         mProjectsView.hidePullToRefreshView();
@@ -51,7 +51,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Projects projects) {
+                    public void onNext(ProjectList projects) {
                         if (projects == null || projects.projects == null || projects.projects.size() == 0) {
                             mProjectsView.showNoMoreDataFooter();
                             return;

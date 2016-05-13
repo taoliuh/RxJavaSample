@@ -1,8 +1,9 @@
 package com.sonaive.rxjava.sample.data.remote;
 
 import com.sonaive.rxjava.sample.Config;
-import com.sonaive.rxjava.sample.api.ApiManager;
-import com.sonaive.rxjava.sample.data.Projects;
+import com.sonaive.rxjava.sample.api.ParameterMap;
+import com.sonaive.rxjava.sample.api.ServiceGenerator;
+import com.sonaive.rxjava.sample.data.ProjectList;
 import com.sonaive.rxjava.sample.data.ProjectsDataSource;
 
 import rx.Observable;
@@ -23,7 +24,10 @@ public class ProjectsRemoteDataSource implements ProjectsDataSource {
     }
 
     @Override
-    public Observable<Projects> getProjects(int page) {
-        return ApiManager.getInstance().getProjectsService().getProjects(page * Config.PAGE_SIZE, Config.PAGE_SIZE);
+    public Observable<ProjectList> getProjects(int page) {
+        ParameterMap map = new ParameterMap();
+        map.put("offset", String.valueOf(page * Config.PAGE_SIZE));
+        map.put("limit", String.valueOf(Config.PAGE_SIZE));
+        return ServiceGenerator.getInstance().getProjectsService().getProjects(map.transformMap());
     }
 }

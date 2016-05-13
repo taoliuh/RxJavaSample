@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by liutao on 5/12/16.
  */
-public class Projects {
+public class ProjectList {
     public int page;
     public List<Project> projects;
 }

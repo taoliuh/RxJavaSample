@@ -3,6 +3,7 @@ package com.sonaive.rxjava.sample.api;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,21 +13,21 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiManager {
+public class ServiceGenerator {
 
     public static final String API_HOST = "http://test.api.zhimadianying.com";
 
     final ProjectsService mProjectsService;
 
     private static class Holder {
-        private static final ApiManager INSTANCE = new ApiManager();
+        private static final ServiceGenerator INSTANCE = new ServiceGenerator();
     }
 
-    public static ApiManager getInstance() {
+    public static ServiceGenerator getInstance() {
         return Holder.INSTANCE;
     }
 
-    private ApiManager() {
+    private ServiceGenerator() {
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -43,7 +44,7 @@ public class ApiManager {
                     }
                 })
                 .addInterceptor(loggingInterceptor)
-                .connectTimeout(12, TimeUnit.SECONDS);
+                .connectTimeout(10, TimeUnit.SECONDS);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())

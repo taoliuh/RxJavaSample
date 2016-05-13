@@ -20,7 +20,5 @@ package com.sonaive.rxjava.sample;
  */
 public class Config {
     public static final int PAGE_SIZE = 10;
-    public static final String DEVICE_TYPE = "android";
-    public static final String CREDIT_TYPE = "103";
-    public static final int TAB_SWITCH_TIME = 600;
+    public static final String APP_SECRET = "android";
 }
