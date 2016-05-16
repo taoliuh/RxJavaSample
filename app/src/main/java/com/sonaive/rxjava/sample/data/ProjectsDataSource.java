@@ -9,4 +9,6 @@ public interface ProjectsDataSource {
 
     Observable<ProjectList> getProjects(int page);
 
+    void saveProjects(ProjectList projects);
+
 }

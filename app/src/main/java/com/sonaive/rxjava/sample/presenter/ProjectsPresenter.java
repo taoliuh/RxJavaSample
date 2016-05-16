@@ -2,8 +2,12 @@ package com.sonaive.rxjava.sample.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.orhanobut.logger.Logger;
 import com.sonaive.rxjava.sample.data.ProjectList;
 import com.sonaive.rxjava.sample.data.ProjectsRepository;
+import com.sonaive.rxjava.sample.data.exception.EmptyDataException;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import rx.Observer;
 import rx.Subscription;
@@ -20,7 +24,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
     private final ProjectsRepository mRepository;
     private final ProjectsContract.View mProjectsView;
     private CompositeSubscription mSubscriptions;
-    private int mPage = 0;
+    private AtomicInteger mPage = new AtomicInteger(1);
 
     public ProjectsPresenter(@NonNull ProjectsRepository projectsRepository, @NonNull ProjectsContract.View projectsView) {
         mRepository = checkNotNull(projectsRepository);
@@ -33,7 +37,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
     public void loadProjects() {
         mSubscriptions.clear();
         Subscription subscription = mRepository
-                .getProjects(mPage)
+                .getProjects(mPage.get())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ProjectList>() {
@@ -45,6 +49,11 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (e instanceof EmptyDataException) {
+                            mProjectsView.showEmptyView();
+                            return;
+                        }
+                        e.printStackTrace();
                         mProjectsView.hidePullToRefreshView();
                         mProjectsView.showRetryFooter();
                         mProjectsView.showErrorView();
@@ -52,12 +61,13 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
 
                     @Override
                     public void onNext(ProjectList projects) {
-                        if (projects == null || projects.projects == null || projects.projects.size() == 0) {
+                        if (projects == null || projects.isNoMoreData()) {
                             mProjectsView.showNoMoreDataFooter();
                             return;
                         }
-                        mProjectsView.showProjects(mPage, projects.projects);
-                        ++mPage;
+                        Logger.d("show projects, page %s", projects.page);
+                        mProjectsView.showProjects(projects.page, projects.projects);
+                        mPage.set(projects.page + 1);
                     }
                 });
         mSubscriptions.add(subscription);
@@ -65,7 +75,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
 
     @Override
     public void refresh() {
-        mPage = 0;
+        mPage.set(0);
         loadProjects();
     }
 

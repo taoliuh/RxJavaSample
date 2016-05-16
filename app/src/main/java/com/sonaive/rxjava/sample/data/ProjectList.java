@@ -8,4 +8,12 @@ import java.util.List;
 public class ProjectList {
     public int page;
     public List<Project> projects;
+
+    public boolean isEmpty() {
+        return page == 1 && (projects == null || projects.size() == 0);
+    }
+
+    public boolean isNoMoreData() {
+        return projects == null || projects.size() == 0;
+    }
 }

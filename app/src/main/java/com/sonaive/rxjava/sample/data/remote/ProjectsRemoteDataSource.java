@@ -30,4 +30,9 @@ public class ProjectsRemoteDataSource implements ProjectsDataSource {
         map.put("limit", String.valueOf(Config.PAGE_SIZE));
         return ServiceGenerator.getInstance().getProjectsService().getProjects(map.transformMap());
     }
+
+    @Override
+    public void saveProjects(ProjectList projects) {
+        // do nothing
+    }
 }

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.sonaive.rxjava.sample.data.local.ProjectsLocalDataSource;
 import com.sonaive.rxjava.sample.utils.ActivityUtils;
 import com.sonaive.rxjava.sample.R;
 import com.sonaive.rxjava.sample.data.ProjectsRepository;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), recorderFragment, R.id.contentFrame);
         }
-
-        ProjectsPresenter projectsPresenter = new ProjectsPresenter(ProjectsRepository.getInstance(ProjectsRemoteDataSource.getInstance()), recorderFragment);
+        new ProjectsPresenter(ProjectsRepository.getInstance(ProjectsRemoteDataSource.getInstance(), ProjectsLocalDataSource.getInstance(this)), recorderFragment);
     }
 }
