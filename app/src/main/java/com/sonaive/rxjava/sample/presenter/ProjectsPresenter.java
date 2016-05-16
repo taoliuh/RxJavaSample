@@ -24,7 +24,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
     private final ProjectsRepository mRepository;
     private final ProjectsContract.View mProjectsView;
     private CompositeSubscription mSubscriptions;
-    private AtomicInteger mPage = new AtomicInteger(1);
+    private AtomicInteger mPage = new AtomicInteger(0);
 
     public ProjectsPresenter(@NonNull ProjectsRepository projectsRepository, @NonNull ProjectsContract.View projectsView) {
         mRepository = checkNotNull(projectsRepository);
