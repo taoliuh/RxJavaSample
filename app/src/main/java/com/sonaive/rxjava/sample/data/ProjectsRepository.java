@@ -6,7 +6,6 @@ import com.orhanobut.logger.Logger;
 import com.sonaive.rxjava.sample.data.exception.EmptyDataException;
 
 import rx.Observable;
-import rx.exceptions.Exceptions;
 import rx.functions.Action1;
 
 import static com.google.common.base.Preconditions.checkNotNull;
